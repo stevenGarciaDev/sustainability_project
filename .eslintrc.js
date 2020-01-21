@@ -25,7 +25,6 @@ module.exports = {
   plugins: ['react', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
-    'import/no-extraneous-dependencies': 'off',
     'no-await-in-loop': 'off',
     'no-loop-func': 'off',
     'no-plusplus': 'off',
@@ -33,5 +32,6 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
