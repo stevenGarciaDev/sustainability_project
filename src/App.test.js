@@ -1,8 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import App, { dataTestIds } from './App';
 
 describe('renders <App />', () => {
-  // Temporary test
-  expect(render(<App />)).toBeTruthy();
+  it('<App /> renders', () => {
+    const { getByTestId } = render(<App />);
+    expect(getByTestId(dataTestIds.APP)).toBeTruthy();
+  });
 });
