@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Sustainability Project**\
+CECS 445 Spring 2020
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+**Requirements**
 
-### `yarn start`
+> Nodejs  
+> This includes `npm`, a package manager
+> https://nodejs.org/en/
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+**Getting Started**
 
-### `yarn test`
+- After pulling the git repo, open up your terminal and `cd` into the `sustainability_project` folder
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Then run `npm install`, this will install all of the dependencies for this project
 
-### `yarn build`
+- To start the app, type `npm start`, which will start up a local development server at `localhost:3000` and automatically open up your web browser
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+**Github Proccess**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If you want to add something to the github repo, please make a `branch` and once you are done, create a `pull request` so we can review it before merging it to `master`
 
-### `yarn eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Notes:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `ESLint and Prettier` are setup for this repo, whenever you `push`, they will automatically run before hand and try to automatically lint the code, if there are errors that it can't fix, your push won't go through.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  > To run `eslint and prettier`, open up a terminal and run `npm run lint-fix`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- We will be using `Jest` and `React-testing-library` to test our code. Testing ensures that our code will be functional. I will go over how to write tests for your code on a later date.
 
-## Learn More
+- I decided to use `styled-components` in place of traditional css, more info can be found at https://styled-components.com/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- We will probably use a `component library` such as https://material-ui.com/
