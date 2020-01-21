@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -24,5 +25,13 @@ module.exports = {
   plugins: ['react', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'import/no-extraneous-dependencies': 'off',
+    'no-await-in-loop': 'off',
+    'no-loop-func': 'off',
+    'no-plusplus': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off',
+    'react/destructuring-assignment': 'off',
+    'react/jsx-filename-extension': 'off',
   },
 };
