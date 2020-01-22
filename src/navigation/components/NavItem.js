@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { IonItem, IonLabel } from '@ionic/react';
 
+export const dataTestIds = {
+  LINK: 'LINK',
+};
+
 const Link = styled(IonItem)`
   border-bottom: ${({ isCurrentPage, theme }) =>
     isCurrentPage ? `2px solid ${theme.primary}` : 'none'};
@@ -16,15 +20,19 @@ const Label = styled(IonLabel)`
 const NavItem = ({ route, label }) => {
   const { pathname } = useLocation();
   return (
-    <Link isCurrentPage={route === pathname} href={route}>
+    <Link
+      data-testid={dataTestIds.LINK}
+      isCurrentPage={route === pathname}
+      href={route}
+    >
       <Label>{label}</Label>
     </Link>
   );
 };
 
 NavItem.propTypes = {
-  route: PropTypes.string,
-  label: PropTypes.string,
+  route: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default NavItem;

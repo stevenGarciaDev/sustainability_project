@@ -3,13 +3,17 @@ import { render } from '@testing-library/react';
 import { IonReactRouter } from '@ionic/react-router';
 import HomePage, { dataTestIds } from '../HomePage';
 
-describe('renders <HomePage />', () => {
-  it('<HomePage /> renders', () => {
-    const { getByTestId } = render(
+describe('<HomePage />', () => {
+  let getByTestId;
+  beforeEach(() => {
+    ({ getByTestId } = render(
       <IonReactRouter>
         <HomePage />
       </IonReactRouter>
-    );
+    ));
+  });
+
+  it('renders', () => {
     expect(getByTestId(dataTestIds.HomePage)).toBeTruthy();
   });
 });
