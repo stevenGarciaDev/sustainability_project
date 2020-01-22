@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  IonPage,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonContent,
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
+
+import NavBar from '../navigation/NavBar';
 
 export const dataTestIds = {
-  HomeScreen: 'HomeScreen',
+  HomePage: 'HomePage',
 };
 
 const Container = styled('div')`
@@ -18,16 +14,12 @@ const Container = styled('div')`
   display: flex;
 `;
 
-function HomeScreen() {
+function HomePage() {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Home</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <NavBar />
       <IonContent>
-        <Container data-testid={dataTestIds.HomeScreen}>
+        <Container data-testid={dataTestIds.HomePage}>
           <p>This is the home page</p>
         </Container>
       </IonContent>
@@ -35,4 +27,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default HomePage;

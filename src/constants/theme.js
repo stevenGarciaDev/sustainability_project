@@ -1,3 +1,3 @@
 export default {
-  HomeScreen: '/',
+  primary: 'teal',
 };
