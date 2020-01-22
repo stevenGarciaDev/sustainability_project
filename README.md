@@ -27,6 +27,13 @@ If you want to add something to the github repo, please make a `branch` and once
 
 ---
 
+**Documentation**
+
+>_Component Library_: **Ionic React** \
+>https://ionicframework.com/docs/components
+
+---
+
 Notes:
 
 - `ESLint and Prettier` are setup for this repo, whenever you `push`, they will automatically run before hand and try to automatically lint the code, if there are errors that it can't fix, your push won't go through.
@@ -37,4 +44,4 @@ Notes:
 
 - I decided to use `styled-components` in place of traditional css, more info can be found at https://styled-components.com/
 
-- We will probably use a `component library` such as https://material-ui.com/
+
