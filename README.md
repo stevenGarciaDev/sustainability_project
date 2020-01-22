@@ -1,9 +1,9 @@
-**Sustainability Project**\
+# Sustainability Project
 CECS 445 Spring 2020
 
 ---
 
-**Requirements**
+## Requirements 
 
 > Nodejs  
 > This includes `npm`, a package manager
@@ -11,7 +11,7 @@ CECS 445 Spring 2020
 
 ---
 
-**Getting Started**
+## Getting Started
 
 - After pulling the git repo, open up your terminal and `cd` into the `sustainability_project` folder
 
@@ -21,20 +21,20 @@ CECS 445 Spring 2020
 
 ---
 
-**Github Proccess**
+## Github Proccess
 
 If you want to add something to the github repo, please make a `branch` and once you are done, create a `pull request` so we can review it before merging it to `master`
 
 ---
 
-**Documentation**
+## Documentation
 
 >_Component Library_: **Ionic React** \
 >https://ionicframework.com/docs/components
 
 ---
 
-Notes:
+## Notes:
 
 - `ESLint and Prettier` are setup for this repo, whenever you `push`, they will automatically run before hand and try to automatically lint the code, if there are errors that it can't fix, your push won't go through.
 
