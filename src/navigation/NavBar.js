@@ -30,6 +30,7 @@ const NavBar = () => {
         </SmallScreenNav>
         <LargeScreenNav side="start">
           <NavItem route={routes.HomePage} label="Home" />
+          <NavItem route={routes.SignUpPage} label="Sign up" />
         </LargeScreenNav>
       </IonToolbar>
     </IonHeader>
