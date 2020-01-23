@@ -5,7 +5,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Route } from 'react-router';
 
 import Menu, { contentId } from './navigation/Menu';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/Home/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
 import UserProfilePage from './pages/UserProfilePage';
