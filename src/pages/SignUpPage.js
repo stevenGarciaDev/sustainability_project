@@ -67,7 +67,6 @@ class SignUpPage extends Component {
       updateData[name] = value;
       return { data: updateData };
     });
-    console.log("this.state", this.state);
   };
 
   handleSubmit = (event) => {
