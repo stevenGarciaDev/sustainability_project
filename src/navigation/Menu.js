@@ -26,6 +26,7 @@ const Menu = () => {
         <IonList>
           <NavItem route={routes.HomePage} label="Home" />
           <NavItem route={routes.SignUpPage} label="Sign Up" />
+          <NavItem route={routes.ShopPage} label="Shop Page" />
           <NavItem route={routes.UserProfilePage} label="My Profile" />
           <NavItem route={routes.CheckoutPage} label="Checkout" />
         </IonList>

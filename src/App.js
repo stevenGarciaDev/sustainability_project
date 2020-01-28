@@ -7,6 +7,7 @@ import { Route } from 'react-router';
 import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
+import ShopPage from './pages/ShopPage';
 import UserProfilePage from './pages/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
 import routes from './pages/routes';
@@ -21,6 +22,7 @@ function App() {
           <IonRouterOutlet id={contentId}>
             <Route path={routes.HomePage} exact component={HomePage} />
             <Route path={routes.SignUpPage} exact component={SignUpPage} />
+            <Route path={routes.ShopPage} exact component={ShopPage} />
             <Route
               path={routes.UserProfilePage}
               exact
