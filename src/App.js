@@ -8,6 +8,7 @@ import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import UserProfilePage from './pages/UserProfilePage';
+import CheckoutPage from './pages/CheckoutPage';
 import routes from './pages/routes';
 import theme from './constants/theme';
 
@@ -25,6 +26,7 @@ function App() {
               exact
               component={UserProfilePage}
             />
+            <Route path={routes.CheckoutPage} exact component={CheckoutPage} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
