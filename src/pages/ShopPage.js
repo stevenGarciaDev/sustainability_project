@@ -20,7 +20,7 @@ function ShopPage() {
       <NavBar />
       <IonContent>
         <Container data-testid={dataTestIds.ShopPage}>
-          <p>This is the ShoppingPage</p>
+          <p>This is the Shopping Page</p>
         </Container>
       </IonContent>
     </IonPage>
