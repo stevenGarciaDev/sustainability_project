@@ -27,7 +27,7 @@ const Headline = styled('h1')`
   }
 `;
 
-const SignUpForm = styled('form')`
+const Form = styled('form')`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@ class SignUpPage extends Component {
         <IonContent>
           <Container data-testid={dataTestIds.SignUpPage}>
             <Headline>Sign up and join the eco-friendly community.</Headline>
-            <SignUpForm onSubmit={(e) => this.handleSubmit(e)}>
+            <Form onSubmit={(e) => this.handleSubmit(e)}>
               <Input
                 name="email"
                 type="email"
@@ -104,7 +104,7 @@ class SignUpPage extends Component {
                 onChange={(e) => this.handleChange(e)}
               />
               <IonButton type="submit">Create Account</IonButton>
-            </SignUpForm>
+            </Form>
             <div>
               <Subtext>Already have an account?</Subtext>
               <IonRouterLink href="#">Login</IonRouterLink>
