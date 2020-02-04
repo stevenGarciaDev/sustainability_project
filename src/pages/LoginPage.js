@@ -57,7 +57,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <IonPage>
