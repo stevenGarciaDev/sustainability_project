@@ -5,4 +5,5 @@ export default {
   UserProfilePage: '/user-profile',
   CheckoutPage: '/checkout',
   LoginPage: '/login',
+  ConnectPage: '/connect'
 };
