@@ -34,6 +34,7 @@ const NavBar = () => {
           <NavItem route={routes.ShopPage} label="Shop" />
           <NavItem route={routes.UserProfilePage} label="My Profile" />
           <NavItem route={routes.CheckoutPage} label="Checkout" />
+          <NavItem route={routes.LeaderboardPage} label="Leaderboard" />
         </LargeScreenNav>
       </IonToolbar>
     </IonHeader>
