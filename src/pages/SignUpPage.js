@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
@@ -57,93 +57,71 @@ const ErrorText = styled('p')`
   margin: 15px;
   color: red;
 `;
-class SignUpPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: { email: '', password: '', confirmPassword: '', error: null },
-    };
-  }
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+const SignUpPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState(null);
 
-    this.setState((prevState) => {
-      const updateData = { ...prevState.data };
-      updateData[name] = value;
-      return { data: updateData };
-    });
-  };
-
-  handleSubmit = (event) => {
-    axios
-      .post('http://localhost:4000/signup', {
-        username: this.state.data.email,
-        password: this.state.data.password,
-      })
-      .then((data) => {
-        axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
-        // redirect them to the home page
-      })
-      .catch((error) => {
-        this.setState({
-          error,
-        });
-        setTimeout(() => {
-          this.setState({
-            error: null,
-          });
-        }, 4000);
-        console.log(error);
-      });
-
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const {
+        data: { token },
+      } = await axios.post('http://localhost:4000/signup', {
+        username: email,
+        password,
+      });
+      sessionStorage.setItem('token', `Bearer ${token}`);
+    } catch (err) {
+      console.log(err);
+      setError(err);
+      setTimeout(() => {
+        setError(null);
+      }, 4000);
+    }
   };
 
-  render() {
-    const { email, password, confirmPassword } = this.state;
-    return (
-      <IonPage>
-        <NavBar />
-        <IonContent>
-          <Container data-testid={dataTestIds.SignUpPage}>
-            <Headline>Sign up and join the eco-friendly community.</Headline>
-            <Form onSubmit={(e) => this.handleSubmit(e)}>
-              <Input
-                name="email"
-                type="email"
-                value={email}
-                placeholder="Email"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <Input
-                name="password"
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <Input
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                placeholder="Confirm Password"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <IonButton type="submit">Create Account</IonButton>
-            </Form>
-            <div>
-              <Subtext>Already have an account?</Subtext>
-              <IonRouterLink href="#">Login</IonRouterLink>
-              <ErrorText>
-                {this.state.error ? 'Unable to signup' : null}
-              </ErrorText>
-            </div>
-          </Container>
-        </IonContent>
-      </IonPage>
-    );
-  }
-}
+  return (
+    <IonPage>
+      <NavBar />
+      <IonContent>
+        <Container data-testid={dataTestIds.SignUpPage}>
+          <Headline>Sign up and join the eco-friendly community.</Headline>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Input
+              name="email"
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              name="password"
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              name="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              placeholder="Confirm Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <IonButton type="submit">Create Account</IonButton>
+          </Form>
+          <div>
+            <Subtext>Already have an account?</Subtext>
+            <IonRouterLink href="#">Login</IonRouterLink>
+            <ErrorText>{error ? 'Unable to signup' : null}</ErrorText>
+          </div>
+        </Container>
+      </IonContent>
+    </IonPage>
+  );
+};
 
 export default SignUpPage;
