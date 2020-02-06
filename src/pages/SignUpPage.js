@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
@@ -51,11 +52,16 @@ const Subtext = styled('p')`
   margin: 15px;
 `;
 
+const ErrorText = styled('p')`
+  display: inline-block;
+  margin: 15px;
+  color: red;
+`;
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: { email: '', password: '', confirmPassword: '' },
+      data: { email: '', password: '', confirmPassword: '', error: null },
     };
   }
 
@@ -70,6 +76,27 @@ class SignUpPage extends Component {
   };
 
   handleSubmit = (event) => {
+    axios
+      .post('http://localhost:4000/signup', {
+        username: this.state.data.email,
+        password: this.state.data.password,
+      })
+      .then((data) => {
+        axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+        // redirect them to the home page
+      })
+      .catch((error) => {
+        this.setState({
+          error,
+        });
+        setTimeout(() => {
+          this.setState({
+            error: null,
+          });
+        }, 4000);
+        console.log(error);
+      });
+
     event.preventDefault();
   };
 
@@ -108,6 +135,9 @@ class SignUpPage extends Component {
             <div>
               <Subtext>Already have an account?</Subtext>
               <IonRouterLink href="#">Login</IonRouterLink>
+              <ErrorText>
+                {this.state.error ? 'Unable to signup' : null}
+              </ErrorText>
             </div>
           </Container>
         </IonContent>
