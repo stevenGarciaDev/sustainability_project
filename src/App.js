@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route } from 'react-router';
+import axios from 'axios';
 
 import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/Home/HomePage';
@@ -18,6 +20,20 @@ import routes from './pages/routes';
 import theme from './constants/theme';
 
 function App() {
+  axios.interceptors.request.use(
+    function(config) {
+      try {
+        const { token } = sessionStorage.getItem('token');
+        config.headers.Authorization = token;
+      } catch (error) {
+        console.log(error);
+      }
+      return config;
+    },
+    function(error) {
+      return Promise.reject(error);
+    }
+  );
   return (
     <ThemeProvider theme={theme}>
       <IonApp>

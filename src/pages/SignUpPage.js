@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
@@ -51,69 +52,76 @@ const Subtext = styled('p')`
   margin: 15px;
 `;
 
-class SignUpPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: { email: '', password: '', confirmPassword: '' },
-    };
-  }
+const ErrorText = styled('p')`
+  display: inline-block;
+  margin: 15px;
+  color: red;
+`;
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+const SignUpPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState(null);
 
-    this.setState((prevState) => {
-      const updateData = { ...prevState.data };
-      updateData[name] = value;
-      return { data: updateData };
-    });
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const {
+        data: { token },
+      } = await axios.post('http://localhost:4000/signup', {
+        username: email,
+        password,
+      });
+      sessionStorage.setItem('token', `Bearer ${token}`);
+    } catch (err) {
+      console.log(err);
+      setError(err);
+      setTimeout(() => {
+        setError(null);
+      }, 4000);
+    }
   };
 
-  render() {
-    const { email, password, confirmPassword } = this.state;
-    return (
-      <IonPage>
-        <NavBar />
-        <IonContent>
-          <Container data-testid={dataTestIds.SignUpPage}>
-            <Headline>Sign up and join the eco-friendly community.</Headline>
-            <Form onSubmit={(e) => this.handleSubmit(e)}>
-              <Input
-                name="email"
-                type="email"
-                value={email}
-                placeholder="Email"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <Input
-                name="password"
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <Input
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                placeholder="Confirm Password"
-                onChange={(e) => this.handleChange(e)}
-              />
-              <IonButton type="submit">Create Account</IonButton>
-            </Form>
-            <div>
-              <Subtext>Already have an account?</Subtext>
-              <IonRouterLink href="#">Login</IonRouterLink>
-            </div>
-          </Container>
-        </IonContent>
-      </IonPage>
-    );
-  }
-}
+  return (
+    <IonPage>
+      <NavBar />
+      <IonContent>
+        <Container data-testid={dataTestIds.SignUpPage}>
+          <Headline>Sign up and join the eco-friendly community.</Headline>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Input
+              name="email"
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              name="password"
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              name="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              placeholder="Confirm Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <IonButton type="submit">Create Account</IonButton>
+          </Form>
+          <div>
+            <Subtext>Already have an account?</Subtext>
+            <IonRouterLink href="#">Login</IonRouterLink>
+            <ErrorText>{error ? 'Unable to signup' : null}</ErrorText>
+          </div>
+        </Container>
+      </IonContent>
+    </IonPage>
+  );
+};
 
 export default SignUpPage;
