@@ -4,6 +4,7 @@ export default {
   ShopPage: '/shop',
   UserProfilePage: '/user-profile',
   CheckoutPage: '/checkout',
+  LeaderboardPage: '/leaderboard',
   LoginPage: '/login',
   ConnectPage: '/connect',
 };

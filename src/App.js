@@ -10,8 +10,10 @@ import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
 import UserProfilePage from './pages/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
 import ConnectPage from './pages/ConnectPage';
+
 import routes from './pages/routes';
 import theme from './constants/theme';
 
@@ -31,6 +33,11 @@ function App() {
               component={UserProfilePage}
             />
             <Route path={routes.CheckoutPage} exact component={CheckoutPage} />
+            <Route
+              path={routes.LeaderboardPage}
+              exact
+              component={LeaderboardPage}
+            />
             <Route path={routes.LoginPage} exact component={LoginPage} />
             <Route path={routes.ConnectPage} exact component={ConnectPage} />
           </IonRouterOutlet>
