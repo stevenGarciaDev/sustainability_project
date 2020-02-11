@@ -15,30 +15,36 @@ const Container = styled('div')`
   display: flex;
 `;
 
-function HomePage() {
+const HomePage = () => {
   const data = [
     {
+      id: 'task1',
       title: 'Test1',
       count: 3000,
     },
     {
+      id: 'task2',
       title: 'Testjynhhy1',
       count: 12121,
     },
   ];
+
+  const onTaskClick = (task) => {
+    console.log(task);
+  };
   return (
     <IonPage>
       <NavBar />
       <IonContent>
         <Container data-testid={dataTestIds.HomePage}>
           <p>This is the home page</p>
-          {data.map(({ title, count }) => {
-            return <TaskCard key={title} title={title} count={count} />;
+          {data.map((task) => {
+            return <TaskCard key={task.id} task={task} onClick={onTaskClick} />;
           })}
         </Container>
       </IonContent>
     </IonPage>
   );
-}
+};
 
 export default HomePage;

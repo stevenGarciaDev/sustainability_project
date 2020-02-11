@@ -9,21 +9,40 @@ import {
 
 import PropType from 'prop-types';
 
-const TaskCard = ({ title, count = 0 }) => {
+export const dataTestIds = {
+  TITLE: 'TITLE',
+  COUNT: 'COUNT',
+  CHECKBOX: 'CHECKBOX',
+};
+
+const TaskCard = ({ task, onClick }) => {
+  const { title, count = 0 } = task;
+
   return (
     <IonCard>
       <IonCardHeader>
-        <IonCardTitle>{title}</IonCardTitle>
-        <IonCardSubtitle>People Completed Today: {count}</IonCardSubtitle>
+        <IonCardTitle data-testid={dataTestIds.TITLE}>{title}</IonCardTitle>
+        <IonCardSubtitle data-testid={dataTestIds.COUNT}>
+          People Completed Today: {count}
+        </IonCardSubtitle>
       </IonCardHeader>
-      <IonCheckbox />
+      <IonCheckbox
+        data-testid={dataTestIds.CHECKBOX}
+        onClick={() => {
+          onClick(task);
+        }}
+      />
     </IonCard>
   );
 };
 
 TaskCard.propTypes = {
-  title: PropType.string.isRequired,
-  count: PropType.number.isRequired,
+  task: PropType.shape({
+    id: PropType.string.isRequired,
+    title: PropType.string.isRequired,
+    count: PropType.number.isRequired,
+  }).isRequired,
+  onClick: PropType.func.isRequired,
 };
 
 export default TaskCard;
