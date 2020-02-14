@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
+import routes from './routes';
 
 export const dataTestIds = {
   LoginPage: 'LoginPage',
@@ -51,12 +53,40 @@ const Subtext = styled('p')`
   margin: 15px;
 `;
 
+const ErrorText = styled('p')`
+  display: inline-block;
+  margin: 15px;
+  color: red;
+`;
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const {
+        data: { token },
+      } = await axios.post('http://localhost:4000/login', {
+        username: email,
+        password,
+      });
+      if (!token) {
+        // eslint-disable-next-line no-throw-literal
+        throw 'User not found';
+      } else {
+        sessionStorage.setItem('token', `Bearer ${token}`);
+        window.location = `${routes.HomePage}`;
+      }
+    } catch (err) {
+      console.log(err);
+      setError(err);
+      setTimeout(() => {
+        setError(null);
+      }, 4000);
+    }
   };
 
   return (
@@ -84,7 +114,8 @@ const LoginPage = () => {
           </Form>
           <div>
             <Subtext>Need to create an account?</Subtext>
-            <IonRouterLink href="#">Login</IonRouterLink>
+            <IonRouterLink href={routes.SignUpPage}>Sign up</IonRouterLink>
+            <ErrorText>{error ? 'Unable to login' : null}</ErrorText>
           </div>
         </Container>
       </IonContent>
