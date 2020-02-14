@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
+import routes from './routes';
 
 export const dataTestIds = {
   SignUpPage: 'SignUpPage',
@@ -73,7 +74,13 @@ const SignUpPage = () => {
         username: email,
         password,
       });
-      sessionStorage.setItem('token', `Bearer ${token}`);
+      if (!token) {
+        // eslint-disable-next-line no-throw-literal
+        throw 'Can not create account';
+      } else {
+        sessionStorage.setItem('token', `Bearer ${token}`);
+        window.location = `${routes.HomePage}`;
+      }
     } catch (err) {
       console.log(err);
       setError(err);
@@ -115,7 +122,7 @@ const SignUpPage = () => {
           </Form>
           <div>
             <Subtext>Already have an account?</Subtext>
-            <IonRouterLink href="#">Login</IonRouterLink>
+            <IonRouterLink href={routes.LoginPage}>Login</IonRouterLink>
             <ErrorText>{error ? 'Unable to signup' : null}</ErrorText>
           </div>
         </Container>
