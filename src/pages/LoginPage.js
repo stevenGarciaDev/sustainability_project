@@ -4,9 +4,10 @@ import axios from 'axios';
 import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
+import routes from './routes';
 
 export const dataTestIds = {
-  SignUpPage: 'SignUpPage',
+  LoginPage: 'LoginPage',
 };
 
 const smallWidthBreakpoint = '600px';
@@ -20,19 +21,19 @@ const Container = styled('div')`
   margin: 30px;
 `;
 
+const Form = styled('form')`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const Headline = styled('h1')`
   text-align: center;
 
   @media (max-width: ${smallWidthBreakpoint}) {
     font-size: 21px;
   }
-`;
-
-const Form = styled('form')`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 const Input = styled('input')`
@@ -58,10 +59,9 @@ const ErrorText = styled('p')`
   color: red;
 `;
 
-const SignUpPage = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
@@ -69,11 +69,17 @@ const SignUpPage = () => {
     try {
       const {
         data: { token },
-      } = await axios.post('http://localhost:4000/signup', {
+      } = await axios.post('http://localhost:4000/login', {
         username: email,
         password,
       });
-      sessionStorage.setItem('token', `Bearer ${token}`);
+      if (!token) {
+        // eslint-disable-next-line no-throw-literal
+        throw 'User not found';
+      } else {
+        sessionStorage.setItem('token', `Bearer ${token}`);
+        window.location = `${routes.HomePage}`;
+      }
     } catch (err) {
       console.log(err);
       setError(err);
@@ -87,8 +93,8 @@ const SignUpPage = () => {
     <IonPage>
       <NavBar />
       <IonContent>
-        <Container data-testid={dataTestIds.SignUpPage}>
-          <Headline>Sign up and join the eco-friendly community.</Headline>
+        <Container data-testid={dataTestIds.LoginPage}>
+          <Headline>Login to your account.</Headline>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Input
               name="email"
@@ -104,19 +110,12 @@ const SignUpPage = () => {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Input
-              name="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              placeholder="Confirm Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <IonButton type="submit">Create Account</IonButton>
+            <IonButton type="submit">Login</IonButton>
           </Form>
           <div>
-            <Subtext>Already have an account?</Subtext>
-            <IonRouterLink href="#">Login</IonRouterLink>
-            <ErrorText>{error ? 'Unable to signup' : null}</ErrorText>
+            <Subtext>Need to create an account?</Subtext>
+            <IonRouterLink href={routes.SignUpPage}>Sign up</IonRouterLink>
+            <ErrorText>{error ? 'Unable to login' : null}</ErrorText>
           </div>
         </Container>
       </IonContent>
@@ -124,4 +123,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginPage;

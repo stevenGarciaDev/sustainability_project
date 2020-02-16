@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route } from 'react-router';
+import axios from 'axios';
 
 import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/Home/HomePage';
@@ -10,10 +12,28 @@ import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
 import UserProfilePage from './pages/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
+import LeaderboardPage from './pages/LeaderboardPage';
+import LoginPage from './pages/LoginPage';
+import ConnectPage from './pages/ConnectPage';
+
 import routes from './pages/routes';
 import theme from './constants/theme';
 
 function App() {
+  axios.interceptors.request.use(
+    function(config) {
+      try {
+        const { token } = sessionStorage.getItem('token');
+        config.headers.Authorization = token;
+      } catch (error) {
+        console.log(error);
+      }
+      return config;
+    },
+    function(error) {
+      return Promise.reject(error);
+    }
+  );
   return (
     <ThemeProvider theme={theme}>
       <IonApp>
@@ -29,6 +49,13 @@ function App() {
               component={UserProfilePage}
             />
             <Route path={routes.CheckoutPage} exact component={CheckoutPage} />
+            <Route
+              path={routes.LeaderboardPage}
+              exact
+              component={LeaderboardPage}
+            />
+            <Route path={routes.LoginPage} exact component={LoginPage} />
+            <Route path={routes.ConnectPage} exact component={ConnectPage} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
