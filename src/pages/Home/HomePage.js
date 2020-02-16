@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IonPage, IonContent } from '@ionic/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import axios from 'axios';
 
 import NavBar from '../../navigation/NavBar';
 import ActivityTaskCard from './components/ActivityTaskCard';
@@ -28,67 +30,55 @@ const Title = styled('h1')`
   font-family: 'Luckiest Guy', cursive;
   font-size: 35px;
   color: green;
+  text-align: center;
 `;
 
 const Subtitle = styled('p')`
   font-family: 'Kalam', cursive;
   font-size: 20px;
+  text-align: center;
+  margin: 0px 30px;
 `;
 
 const HomePage = () => {
-  const data = [
-    {
-      id: 'task1',
-      title: 'Recycle',
-      count: 3000,
-      hasCompleted: false,
-    },
-    {
-      id: 'task2',
-      title: 'Shop EcoFriendly Alternatives',
-      count: 12121,
-      hasCompleted: false,
-    },
-    {
-      id: 'task1',
-      title: 'Recycle',
-      count: 3000,
-      hasCompleted: false,
-    },
-    {
-      id: 'task2',
-      title: 'Shop EcoFriendly Alternatives',
-      count: 12121,
-      hasCompleted: false,
-    },
-    {
-      id: 'task1',
-      title: 'Recycle',
-      count: 3000,
-      hasCompleted: false,
-    },
-    {
-      id: 'task2',
-      title: 'Shop EcoFriendly Alternatives',
-      count: 12121,
-      hasCompleted: false,
-    },
-    {
-      id: 'task1',
-      title: 'Recycle',
-      count: 3000,
-      hasCompleted: false,
-    },
-    {
-      id: 'task2',
-      title: 'Shop EcoFriendly Alternatives',
-      count: 12121,
-      hasCompleted: false,
-    },
-  ];
+  const [tasks, setTasks] = useState([]);
 
-  const onTaskClick = (task) => {
-    console.log(task);
+  useEffect(() => {
+    async function getTasks() {
+      const result = await axios.get('http://localhost:4000/tasks', {
+        headers: { 
+          Authorization: sessionStorage.getItem('token'),
+        },
+      });
+      setTasks(result.data);
+    }
+    getTasks();
+  }, []);
+
+  // const updateTask = async (data) => {
+  //   const task = await axios.put('http://localhost:4000/task', {
+  //     headers: { 
+  //       Authorization: sessionStorage.getItem('token'),
+  //     },
+  //     data,
+  //   });
+  //   console.log('task', task);
+  // };
+
+  const onTaskClick = async (task) => {
+    //await updateTask("test");
+
+    // complete optimistic update for faster UI changes
+    console.log("task clicked was", task);
+    const updatedTasks = [...tasks];
+    const index = updatedTasks.indexOf(task);
+    let { totalCount, hasCompleted } = updatedTasks[index];
+    updatedTasks[index] = {
+      ...task,
+      hasCompleted: !hasCompleted,
+      totalCount: hasCompleted ? --totalCount : ++totalCount,
+    };
+    setTasks(updatedTasks);
   };
 
   return (
@@ -100,14 +90,15 @@ const HomePage = () => {
             <Title>EcoFriends - The Sustainability Project</Title>
             <div>
               <Subtitle>
-                Earn points to complete environmentally friendly activities. Use
+                Earn points by completing environmentally friendly activities. Use
                 those points to get discounts from environmentally concious
                 brands and products.
               </Subtitle>
+              <Subtitle>Check off the tasks that you completed today!</Subtitle>
             </div>
           </Header>
           <TaskCardsContainer>
-            {data.map((task) => {
+            {tasks.map((task) => {
               return (
                 <ActivityTaskCard
                   key={task.id}

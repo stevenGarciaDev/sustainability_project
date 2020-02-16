@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const dataTestIds = {
-  TITLE: 'TITLE',
-  COUNT: 'COUNT',
+  NAME: 'NAME',
+  TOTALCOUNT: 'TOTALCOUNT',
   CHECKBOX: 'CHECKBOX',
 };
 
@@ -39,22 +39,22 @@ const SubTitle = styled('p')`
 
 const Icon = styled('i')`
   font-size: 40px;
+  color: green;
   &:hover {
-    color: green;
     cursor: pointer;
   }
 `;
 
 const ActivityTaskCard = ({ task, onClick }) => {
-  const { title, count = 0, hasCompleted = false } = task;
+  const { name, totalCount = 0, hasCompleted = false } = task;
 
   return (
     <Container>
-      <Title>{title}</Title>
-      <SubTitle>People Completed Today: {count}</SubTitle>
+      <Title>{name}</Title>
+      <SubTitle>Total Contributions: {totalCount}</SubTitle>
       <Icon
         className={hasCompleted ? 'fas fa-check-square' : 'far fa-square'}
-        onClick={() => onClick(task.id)}
+        onClick={() => onClick(task)}
       />
     </Container>
   );
@@ -63,9 +63,9 @@ const ActivityTaskCard = ({ task, onClick }) => {
 ActivityTaskCard.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired,
-    hasCompleted: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    totalCount: PropTypes.number.isRequired,
+    hasCompleted: PropTypes.bool,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
