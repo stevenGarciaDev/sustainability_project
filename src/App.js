@@ -21,9 +21,9 @@ import theme from './constants/theme';
 
 function App() {
   axios.interceptors.request.use(
-    function(config) {
+    async function(config) {
       try {
-        const { token } = sessionStorage.getItem('token');
+        const token = await sessionStorage.getItem('token');
         config.headers.Authorization = token;
       } catch (error) {
         console.log(error);

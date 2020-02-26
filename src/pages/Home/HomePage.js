@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, IonToast } from '@ionic/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
 
@@ -42,43 +42,41 @@ const Subtitle = styled('p')`
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getTasks() {
-      const result = await axios.get('http://localhost:4000/tasks', {
-        headers: { 
-          Authorization: sessionStorage.getItem('token'),
-        },
-      });
-      setTasks(result.data);
+      try {
+        const result = await axios.get('http://localhost:4000/tasks');
+        setTasks(result.data);
+      } catch (err) {
+        setError(err?.response?.data?.message || err.message);
+      }
     }
     getTasks();
   }, []);
 
-  // const updateTask = async (data) => {
-  //   const task = await axios.put('http://localhost:4000/task', {
-  //     headers: { 
-  //       Authorization: sessionStorage.getItem('token'),
-  //     },
-  //     data,
-  //   });
-  //   console.log('task', task);
-  // };
-
   const onTaskClick = async (task) => {
-    //await updateTask("test");
-
-    // complete optimistic update for faster UI changes
-    console.log("task clicked was", task);
-    const updatedTasks = [...tasks];
-    const index = updatedTasks.indexOf(task);
-    let { totalCount, hasCompleted } = updatedTasks[index];
-    updatedTasks[index] = {
-      ...task,
-      hasCompleted: !hasCompleted,
-      totalCount: hasCompleted ? --totalCount : ++totalCount,
-    };
-    setTasks(updatedTasks);
+    try {
+      const updatedTasks = [...tasks];
+      const index = updatedTasks.indexOf(task);
+      const { totalCount, userTask } = updatedTasks[index];
+      updatedTasks[index] = {
+        ...task,
+        totalCount: totalCount + 1,
+        userTask: {
+          count: userTask?.count + 1 || 1,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+      setTasks(updatedTasks);
+      await axios.put('http://localhost:4000/task', {
+        taskId: task.id,
+      });
+    } catch (err) {
+      setError(err?.response?.data?.message || err.message);
+      setTasks(tasks);
+    }
   };
 
   return (
@@ -90,8 +88,8 @@ const HomePage = () => {
             <Title>EcoFriends - The Sustainability Project</Title>
             <div>
               <Subtitle>
-                Earn points by completing environmentally friendly activities. Use
-                those points to get discounts from environmentally concious
+                Earn points by completing environmentally friendly activities.
+                Use those points to get discounts from environmentally concious
                 brands and products.
               </Subtitle>
               <Subtitle>Check off the tasks that you completed today!</Subtitle>
@@ -109,6 +107,13 @@ const HomePage = () => {
             })}
           </TaskCardsContainer>
         </div>
+        <IonToast
+          duration={2000}
+          isOpen={error !== null}
+          onDidDismiss={() => setError(null)}
+          message={error}
+          color="danger"
+        />
       </IonContent>
     </IonPage>
   );
