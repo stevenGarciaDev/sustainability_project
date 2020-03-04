@@ -74,6 +74,11 @@ const ActivityTaskCard = ({ task, onClick }) => {
 };
 
 ActivityTaskCard.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    totalCount: PropTypes.number.isRequired,
+    hasCompleted: PropTypes.bool,
     userTask: PropTypes.shape({
       updatedAt: PropTypes.string,
       count: PropTypes.number,

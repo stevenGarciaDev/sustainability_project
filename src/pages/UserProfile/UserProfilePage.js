@@ -40,13 +40,12 @@ const ProfileImage = styled('div')`
 `;
 
 const StatsContainer = styled('div')`
-  background-color: #F2F4F9;
+  background-color: #f2f4f9;
   padding: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 `;
-
 
 function UserProfilePage() {
   return (
@@ -56,20 +55,20 @@ function UserProfilePage() {
         <Container data-testid={dataTestIds.UserProfilePage}>
           <ProfileInfoContainer>
             <ProfileImage />
-            <UserFollowerInfo infoType='Total Contributions' data='12' />
-            <UserFollowerInfo infoType='Followers' data='12' />
-            <UserFollowerInfo infoType='Following' data='12' />
+            <UserFollowerInfo infoType="Total Contributions" data="12" />
+            <UserFollowerInfo infoType="Followers" data="12" />
+            <UserFollowerInfo infoType="Following" data="12" />
             <FollowingButton />
           </ProfileInfoContainer>
           <StatsContainer>
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
-            <ActivityStatItem taskName='Recycle' count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
+            <ActivityStatItem taskName="Recycle" count={24} />
           </StatsContainer>
         </Container>
       </IonContent>
