@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { IonCheckbox } from '@ionic/react';
+
 export const dataTestIds = {
   NAME: 'NAME',
   TOTALCOUNT: 'TOTALCOUNT',
@@ -37,23 +39,34 @@ const SubTitle = styled('p')`
   color: #929aa2;
 `;
 
-const Icon = styled('i')`
-  font-size: 40px;
-  color: green;
-  &:hover {
-    cursor: pointer;
-  }
+const Checkbox = styled(IonCheckbox)`
+  width: 35px;
+  height: 35px;
+  --background-checked: green;
+  --border-color-checked: green;
 `;
 
 const ActivityTaskCard = ({ task, onClick }) => {
-  const { name, totalCount = 0, hasCompleted = false } = task;
+  const { name, totalCount = 0, userTask } = task;
+
+  let hasCompleted = false;
+  if (userTask?.updatedAt) {
+    const hoursSinceLastUpdate = Math.floor(
+      ((new Date() - new Date(userTask.updatedAt)) / (1000 * 60 * 60)) % 24
+    );
+    if (hoursSinceLastUpdate < 1) {
+      hasCompleted = true;
+    }
+  }
 
   return (
     <Container>
       <Title>{name}</Title>
+      <SubTitle>Your Contributions: {userTask?.count || 0}</SubTitle>
       <SubTitle>Total Contributions: {totalCount}</SubTitle>
-      <Icon
-        className={hasCompleted ? 'fas fa-check-square' : 'far fa-square'}
+      <Checkbox
+        checked={hasCompleted}
+        disabled={hasCompleted}
         onClick={() => onClick(task)}
       />
     </Container>
@@ -61,11 +74,10 @@ const ActivityTaskCard = ({ task, onClick }) => {
 };
 
 ActivityTaskCard.propTypes = {
-  task: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    totalCount: PropTypes.number.isRequired,
-    hasCompleted: PropTypes.bool,
+    userTask: PropTypes.shape({
+      updatedAt: PropTypes.string,
+      count: PropTypes.number,
+    }),
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { IonPage, IonContent, IonButton, IonRouterLink } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  IonButton,
+  IonRouterLink,
+  IonToast,
+} from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
 import routes from './routes';
@@ -53,12 +59,6 @@ const Subtext = styled('p')`
   margin: 15px;
 `;
 
-const ErrorText = styled('p')`
-  display: inline-block;
-  margin: 15px;
-  color: red;
-`;
-
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -82,11 +82,7 @@ const SignUpPage = () => {
         window.location = `${routes.HomePage}`;
       }
     } catch (err) {
-      console.log(err);
-      setError(err);
-      setTimeout(() => {
-        setError(null);
-      }, 4000);
+      setError(err?.response?.data?.message || err.message);
     }
   };
 
@@ -123,9 +119,15 @@ const SignUpPage = () => {
           <div>
             <Subtext>Already have an account?</Subtext>
             <IonRouterLink href={routes.LoginPage}>Login</IonRouterLink>
-            <ErrorText>{error ? 'Unable to signup' : null}</ErrorText>
           </div>
         </Container>
+        <IonToast
+          duration={2000}
+          isOpen={error !== null}
+          onDidDismiss={() => setError(null)}
+          message={error}
+          color="danger"
+        />
       </IonContent>
     </IonPage>
   );
