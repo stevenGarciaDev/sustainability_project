@@ -10,7 +10,7 @@ import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/Home/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
-import UserProfilePage from './pages/UserProfilePage';
+import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
