@@ -14,9 +14,14 @@ const Container = styled('div')`
   margin: 10px;
 `;
 
+const Title = styled('h1')`
+  text-align: center;
+  font-size: 20px;
+`;
+
 const ActivityStatItem = ({ taskName, count = 0 }) => (
   <Container>
-    <h1>{taskName}</h1>
+    <Title>{taskName}</Title>
     <p>Number of contributions: {count}</p>
   </Container>
 );

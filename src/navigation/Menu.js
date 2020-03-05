@@ -32,6 +32,10 @@ const Menu = () => {
           <NavItem route={routes.CheckoutPage} label="Checkout" />
           <NavItem route={routes.LeaderboardPage} label="Leaderboard" />
           <NavItem route={routes.ConnectPage} label="Connect" />
+          <NavItem
+            route={routes.ProfileSettingsPage}
+            label="Profile Settings"
+          />
         </IonList>
       </IonContent>
     </IonMenu>

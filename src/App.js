@@ -15,6 +15,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
 import ConnectPage from './pages/ConnectPage';
+import ProfileSettingsPage from './pages/ProfileSettings';
 
 import routes from './pages/routes';
 import theme from './constants/theme';
@@ -56,6 +57,11 @@ function App() {
             />
             <Route path={routes.LoginPage} exact component={LoginPage} />
             <Route path={routes.ConnectPage} exact component={ConnectPage} />
+            <Route
+              path={routes.ProfileSettingsPage}
+              exact
+              component={ProfileSettingsPage}
+            />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
