@@ -7,7 +7,6 @@ import {
   IonItem,
   IonButton,
   IonInput,
-  IonLabel,
 } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
@@ -30,9 +29,9 @@ const Title = styled('h1')`
 `;
 
 const Label = styled('label')`
-	font-family: 'Luckiest Guy', cursive;
-	font-size: 20px;
-	margin: 20px;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 20px;
+  margin: 20px;
 `;
 
 const Textarea = styled('textarea')`
@@ -49,6 +48,7 @@ const Textarea = styled('textarea')`
 
 function ProfileSettings() {
   const [bio, setBio] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState('');
 
   useEffect(() => {
     async function getUserInfo() {
@@ -58,6 +58,7 @@ function ProfileSettings() {
         );
         console.log(`result is `, response);
         setBio(response.data.bio);
+        
       } catch (err) {
         console.log(err);
       }
@@ -65,20 +66,46 @@ function ProfileSettings() {
     getUserInfo();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`bio is ${bio}`);
+    let uploadData = new FormData();
+    const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/datstzhhh/image/upload';
+    const CLOUDINARY_UPLOAD_PRESET = 'ecofriends';
 
     try {
-      const response = axios.put(
-        'http://localhost:4000/updateProfileSettings',
-        {
-          bio,
-        }
-      );
+      if (profilePhoto) { 
+        uploadData.append('file', profilePhoto);
+        uploadData.append('api_key', '584547413875997');
+        uploadData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+        console.log('image file', profilePhoto);
+        const response = await axios.post(`https://cors-anywhere.herokuapp.com/${CLOUDINARY_URL}`, uploadData);
+        console.log('response.data.secure_url', response.data.secure_url);
+        
+        setProfilePhoto(response.data.secure_url);
+        const result = await axios.put(
+          'http://localhost:4000/updateProfileSettings',
+          {
+            bio,
+            profile_photo: response.data.secure_url,
+          }
+        );
+      } else {
+        const result = await axios.put(
+          'http://localhost:4000/updateProfileSettings',
+          {
+            bio
+          }
+        );
+      }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleChange = (e) => {
+    console.log('files', e.target.files[0]);
+    setProfilePhoto(e.target.files[0]);
   };
 
   return (
@@ -86,9 +113,9 @@ function ProfileSettings() {
       <NavBar />
       <IonContent>
         <Container data-testid={dataTestIds.ProfileSettings}>
-          <Title>Modify your Profile Settings 😁</Title>
+          <Title>Modify your Profile Settings</Title>
 
-					<Label>Update your bio</Label>
+          <Label>Update your bio</Label>
           <IonItem>
             <Textarea
               placeholder="Add your bio here"
@@ -97,9 +124,13 @@ function ProfileSettings() {
             />
           </IonItem>
 
-					<Label>Update your Profile Picture</Label>
+          <Label>Update your Profile Picture</Label>
           <IonItem>
-            <IonInput type="file" accept="image/png, image/jpeg"></IonInput>
+            <input 
+              type="file" 
+              onChange={(e) => handleChange(e)}
+              accept="image/png, image/jpeg"
+            />
           </IonItem>
 
           <IonButton onClick={(e) => handleSubmit(e)}>Save Changes</IonButton>

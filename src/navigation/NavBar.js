@@ -30,14 +30,25 @@ const NavBar = () => {
         </SmallScreenNav>
         <LargeScreenNav side="start">
           <NavItem route={routes.HomePage} label="Home" />
-          <NavItem route={routes.SignUpPage} label="Sign up" />
-          <NavItem route={routes.LoginPage} label="Login" />
-          <NavItem route={routes.ShopPage} label="Shop" />
-          <NavItem route={routes.UserProfilePage} label="My Profile" />
-          <NavItem route={routes.CheckoutPage} label="Checkout" />
-          <NavItem route={routes.LeaderboardPage} label="Leaderboard" />
-          <NavItem route={routes.ConnectPage} label="Connect" />
-          <NavItem route={routes.ProfileSettingsPage} label="Profile Settings" />
+          {sessionStorage.getItem('token') ?
+            <>
+              <NavItem route={routes.ShopPage} label="Shop" />
+              <NavItem route={routes.UserProfilePage} label="My Profile" />
+              <NavItem route={routes.CheckoutPage} label="Checkout" />
+              <NavItem route={routes.LeaderboardPage} label="Leaderboard" />
+              <NavItem route={routes.ConnectPage} label="Connect" />
+              <NavItem
+                route={routes.ProfileSettingsPage}
+                label="Profile Settings"
+              />
+              <NavItem route={routes.LogoutPage} label="Logout" />
+            </>
+          :
+          <>
+              <NavItem route={routes.SignUpPage} label="Sign up" />
+              <NavItem route={routes.LoginPage} label="Login" />
+          </> 
+          }   
         </LargeScreenNav>
       </IonToolbar>
     </IonHeader>

@@ -16,6 +16,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
 import ConnectPage from './pages/ConnectPage';
 import ProfileSettingsPage from './pages/ProfileSettings';
+import LogoutPage from './pages/LogoutPage';
 
 import routes from './pages/routes';
 import theme from './constants/theme';
@@ -62,6 +63,7 @@ function App() {
               exact
               component={ProfileSettingsPage}
             />
+            <Route path={routes.LogoutPage} exact component={LogoutPage} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>

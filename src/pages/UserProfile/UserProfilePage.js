@@ -29,7 +29,7 @@ const ProfileInfoContainer = styled('div')`
   }
 `;
 
-const ProfileImage = styled('div')`
+const ProfileImage = styled('img')`
   border: 1px solid #ccc;
   border-radius: 50%;
   width: 200px;
@@ -67,17 +67,16 @@ const UserBio = styled('div')`
 function UserProfilePage() {
   const [tasks, setTasks] = useState([]);
   const [bio, setBio] = useState([]);
+  const [profilePhoto, setProfilePhoto] = useState('');
 
-  const [error, setError] = useState(null);
- 
   useEffect(() => {
     async function getTasks() {
       try {
         const result = await axios.get('http://localhost:4000/tasks');
-        console.log("result", result);
+        console.log('result', result);
         setTasks(result.data);
       } catch (err) {
-        setError(err?.response?.data?.message || err.message);
+        console.log(err);
       }
     }
 
@@ -86,8 +85,9 @@ function UserProfilePage() {
         const response = await axios.get(
           'http://localhost:4000/profileSettings'
         );
-        console.log(`result is `, response);
+        console.log(`user info is `, response);
         setBio(response.data.bio);
+        setProfilePhoto(response.data.profilePhoto);
       } catch (err) {
         console.log(err);
       }
@@ -102,7 +102,7 @@ function UserProfilePage() {
       <IonContent>
         <Container data-testid={dataTestIds.UserProfilePage}>
           <ProfileInfoContainer>
-            <ProfileImage />
+            <ProfileImage src={profilePhoto} height='200' width='200' />
             <UserInfoContainer>
               <FollowerInfoContainer>
                 <UserFollowerInfo infoType="Total Contributions" data="12" />
@@ -114,11 +114,12 @@ function UserProfilePage() {
             </UserInfoContainer>
           </ProfileInfoContainer>
           <StatsContainer>
-            {tasks.map(task => (
-              <ActivityStatItem 
-                key={task.id} 
-                taskName={task.name} 
-                count={task.userTask.count} />
+            {tasks.map((task) => (
+              <ActivityStatItem
+                key={task.id}
+                taskName={task.name}
+                count={task.userTask.count}
+              />
             ))}
           </StatsContainer>
         </Container>
