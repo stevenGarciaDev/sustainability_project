@@ -14,7 +14,7 @@ import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
-import ConnectPage from './pages/ConnectPage';
+import ConnectPage from './pages/Connect/ConnectPage';
 import ProfileSettingsPage from './pages/ProfileSettings';
 import LogoutPage from './pages/LogoutPage';
 
