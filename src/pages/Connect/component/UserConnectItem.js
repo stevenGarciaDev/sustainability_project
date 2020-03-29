@@ -29,7 +29,7 @@ const UnfollowButton = styled('button')`
   color: white;
   font-size: 20px;
   padding: 10px;
-  background-color: #354B59;
+  background-color: #354b59;
   height: 40px;
   border-radius: 5px;
 `;
@@ -57,6 +57,7 @@ const UserNameDisplay = styled('h1')`
 `;
 
 const UserConnectItem = (props) => {
+
   const { user } = props;
   return (
     <Container>
@@ -64,16 +65,17 @@ const UserConnectItem = (props) => {
         <UserPhotoIcon src={user.profilePhoto} />
         <UserNameDisplay>{user.username}</UserNameDisplay>
       </UserInfo>
-      {props.isFollowing ?
-        <UnfollowButton>Unfollow</UnfollowButton>
-        : <FollowButton>Follow</FollowButton>
-      }
+      {props.isFollowing ? (
+        <UnfollowButton onClick={() => props.onUnfollow(user.id)}>Unfollow</UnfollowButton>
+      ) : (
+        <FollowButton onClick={() => props.onFollow(user.id)}>Follow</FollowButton>
+      )}
     </Container>
   );
-}
+};
 
 UserConnectItem.defaultProps = {
-  isFollowing: false
-}
+  isFollowing: false,
+};
 
 export default UserConnectItem;

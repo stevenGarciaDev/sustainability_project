@@ -25,7 +25,7 @@ const Menu = () => {
       <IonContent>
         <IonList>
           <NavItem route={routes.HomePage} label="Home" />
-          {sessionStorage.getItem('token') ? 
+          {sessionStorage.getItem('token') ? (
             <>
               <NavItem route={routes.ShopPage} label="Shop Page" />
               <NavItem route={routes.UserProfilePage} label="My Profile" />
@@ -38,12 +38,12 @@ const Menu = () => {
               />
               <NavItem route={routes.LogoutPage} label="Logout" />
             </>
-          :
+          ) : (
             <>
               <NavItem route={routes.SignUpPage} label="Sign Up" />
               <NavItem route={routes.LoginPage} label="Login" />
             </>
-        }
+          )}
         </IonList>
       </IonContent>
     </IonMenu>

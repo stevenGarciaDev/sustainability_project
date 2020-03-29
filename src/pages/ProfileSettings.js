@@ -58,7 +58,6 @@ function ProfileSettings() {
         );
         console.log(`result is `, response);
         setBio(response.data.bio);
-        
       } catch (err) {
         console.log(err);
       }
@@ -68,20 +67,24 @@ function ProfileSettings() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let uploadData = new FormData();
-    const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/datstzhhh/image/upload';
+    const uploadData = new FormData();
+    const CLOUDINARY_URL =
+      'https://api.cloudinary.com/v1_1/datstzhhh/image/upload';
     const CLOUDINARY_UPLOAD_PRESET = 'ecofriends';
 
     try {
-      if (profilePhoto) { 
+      if (profilePhoto) {
         uploadData.append('file', profilePhoto);
         uploadData.append('api_key', '584547413875997');
         uploadData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
         console.log('image file', profilePhoto);
-        const response = await axios.post(`https://cors-anywhere.herokuapp.com/${CLOUDINARY_URL}`, uploadData);
+        const response = await axios.post(
+          `https://cors-anywhere.herokuapp.com/${CLOUDINARY_URL}`,
+          uploadData
+        );
         console.log('response.data.secure_url', response.data.secure_url);
-        
+
         setProfilePhoto(response.data.secure_url);
         const result = await axios.put(
           'http://localhost:4000/updateProfileSettings',
@@ -94,7 +97,7 @@ function ProfileSettings() {
         const result = await axios.put(
           'http://localhost:4000/updateProfileSettings',
           {
-            bio
+            bio,
           }
         );
       }
@@ -126,8 +129,8 @@ function ProfileSettings() {
 
           <Label>Update your Profile Picture</Label>
           <IonItem>
-            <input 
-              type="file" 
+            <input
+              type="file"
               onChange={(e) => handleChange(e)}
               accept="image/png, image/jpeg"
             />

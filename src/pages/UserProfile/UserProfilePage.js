@@ -102,7 +102,7 @@ function UserProfilePage() {
       <IonContent>
         <Container data-testid={dataTestIds.UserProfilePage}>
           <ProfileInfoContainer>
-            <ProfileImage src={profilePhoto} height='200' width='200' />
+            <ProfileImage src={profilePhoto} height="200" width="200" />
             <UserInfoContainer>
               <FollowerInfoContainer>
                 <UserFollowerInfo infoType="Total Contributions" data="12" />
