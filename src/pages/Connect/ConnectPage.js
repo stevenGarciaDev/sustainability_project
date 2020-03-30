@@ -86,7 +86,7 @@ function ConnectPage() {
     // id for the user to unfollow
     try {
       // send post request
-      const response = await axios.post('http://localhost:4000/unfollowUser', {
+      await axios.post('http://localhost:4000/unfollowUser', {
         user_followed_id: id
       });
       let updatedFollowedUsers = [...followedUsers];

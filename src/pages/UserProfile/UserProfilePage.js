@@ -6,7 +6,6 @@ import { IonPage, IonContent } from '@ionic/react';
 import NavBar from '../../navigation/NavBar';
 import ActivityStatItem from './components/ActivityStatItem';
 import UserFollowerInfo from './components/UserFollowerInfo';
-import FollowingButton from './components/FollowingButton';
 
 export const dataTestIds = {
   UserProfilePage: 'UserProfilePage',
@@ -30,7 +29,6 @@ const ProfileInfoContainer = styled('div')`
 `;
 
 const ProfileImage = styled('img')`
-  border: 1px solid #ccc;
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -68,12 +66,14 @@ function UserProfilePage() {
   const [tasks, setTasks] = useState([]);
   const [bio, setBio] = useState([]);
   const [profilePhoto, setProfilePhoto] = useState('');
+  const [totalContributions, setTotalContributions] = useState('');
+  const [followers, setFollowers] = useState([]);
+  const [followedUsers, setFollowedUsers] = useState([]);
 
   useEffect(() => {
     async function getTasks() {
       try {
         const result = await axios.get('http://localhost:4000/tasks');
-        console.log('result', result);
         setTasks(result.data);
       } catch (err) {
         console.log(err);
@@ -85,14 +85,48 @@ function UserProfilePage() {
         const response = await axios.get(
           'http://localhost:4000/profileSettings'
         );
-        console.log(`user info is `, response);
         setBio(response.data.bio);
         setProfilePhoto(response.data.profilePhoto);
       } catch (err) {
         console.log(err);
       }
     }
+
+    async function getTotalContributions() {
+      try {
+        const response = await axios.get(
+          'http://localhost:4000/retrieveUserTaskCount'
+        );
+        setTotalContributions(response.data.sum);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    async function getFollowerInfo() {
+      try {
+        const response = await axios.get(
+          'http://localhost:4000/retrieveFollowers'
+        );
+        setFollowers(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    async function getFollowedUsers() {
+      try {
+        const response = await axios.get('http://localhost:4000/retrieveFollowedUsers');
+        setFollowedUsers(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     getUserInfo();
+    getTotalContributions();
+    getFollowerInfo();
+    getFollowedUsers();
     getTasks();
   }, []);
 
@@ -105,10 +139,9 @@ function UserProfilePage() {
             <ProfileImage src={profilePhoto} height="200" width="200" />
             <UserInfoContainer>
               <FollowerInfoContainer>
-                <UserFollowerInfo infoType="Total Contributions" data="12" />
-                <UserFollowerInfo infoType="Followers" data="12" />
-                <UserFollowerInfo infoType="Following" data="12" />
-                <FollowingButton />
+                <UserFollowerInfo infoType="Total Contributions" data={totalContributions} />
+                <UserFollowerInfo infoType="Followers" data={followers.length.toString()} />
+                <UserFollowerInfo infoType="Following" data={followedUsers.length.toString()} />
               </FollowerInfoContainer>
               <UserBio>{bio}</UserBio>
             </UserInfoContainer>

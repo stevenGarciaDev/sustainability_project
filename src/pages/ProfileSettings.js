@@ -6,7 +6,6 @@ import {
   IonContent,
   IonItem,
   IonButton,
-  IonInput,
 } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
@@ -86,7 +85,7 @@ function ProfileSettings() {
         console.log('response.data.secure_url', response.data.secure_url);
 
         setProfilePhoto(response.data.secure_url);
-        const result = await axios.put(
+        await axios.put(
           'http://localhost:4000/updateProfileSettings',
           {
             bio,
@@ -94,7 +93,7 @@ function ProfileSettings() {
           }
         );
       } else {
-        const result = await axios.put(
+        await axios.put(
           'http://localhost:4000/updateProfileSettings',
           {
             bio,
