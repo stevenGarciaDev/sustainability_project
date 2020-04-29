@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 import { IonPage, IonContent, IonToast } from '@ionic/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
@@ -42,6 +43,7 @@ const Subtitle = styled('p')`
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
+
   const [error, setError] = useState(null);
 
   useEffect(() => {

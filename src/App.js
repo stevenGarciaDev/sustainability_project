@@ -10,11 +10,13 @@ import Menu, { contentId } from './navigation/Menu';
 import HomePage from './pages/Home/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
-import UserProfilePage from './pages/UserProfilePage';
+import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
-import ConnectPage from './pages/ConnectPage';
+import ConnectPage from './pages/Connect/ConnectPage';
+import ProfileSettingsPage from './pages/ProfileSettings';
+import LogoutPage from './pages/LogoutPage';
 
 import routes from './pages/routes';
 import theme from './constants/theme';
@@ -56,6 +58,12 @@ function App() {
             />
             <Route path={routes.LoginPage} exact component={LoginPage} />
             <Route path={routes.ConnectPage} exact component={ConnectPage} />
+            <Route
+              path={routes.ProfileSettingsPage}
+              exact
+              component={ProfileSettingsPage}
+            />
+            <Route path={routes.LogoutPage} exact component={LogoutPage} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>

@@ -7,4 +7,6 @@ export default {
   LeaderboardPage: '/leaderboard',
   LoginPage: '/login',
   ConnectPage: '/connect',
+  ProfileSettingsPage: '/profileSettings',
+  LogoutPage: '/logout',
 };
