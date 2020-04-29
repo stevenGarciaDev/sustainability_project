@@ -69,7 +69,7 @@ const LoginPage = () => {
     try {
       const {
         data: { token },
-      } = await axios.post('http://localhost:4000/login', {
+      } = await axios.post('/login', {
         username: email,
         password,
       });

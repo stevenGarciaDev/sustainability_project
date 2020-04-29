@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -57,7 +58,6 @@ const UserNameDisplay = styled('h1')`
 `;
 
 const UserConnectItem = (props) => {
-
   const { user } = props;
   return (
     <Container>
@@ -66,9 +66,13 @@ const UserConnectItem = (props) => {
         <UserNameDisplay>{user.username}</UserNameDisplay>
       </UserInfo>
       {props.isFollowing ? (
-        <UnfollowButton onClick={() => props.onUnfollow(user.id)}>Unfollow</UnfollowButton>
+        <UnfollowButton onClick={() => props.onUnfollow(user.id)}>
+          Unfollow
+        </UnfollowButton>
       ) : (
-        <FollowButton onClick={() => props.onFollow(user.id)}>Follow</FollowButton>
+        <FollowButton onClick={() => props.onFollow(user.id)}>
+          Follow
+        </FollowButton>
       )}
     </Container>
   );

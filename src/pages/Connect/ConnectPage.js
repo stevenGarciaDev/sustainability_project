@@ -46,7 +46,7 @@ function ConnectPage() {
 
   async function getUsers() {
     try {
-      const response = await axios.get('http://localhost:4000/allUsers');
+      const response = await axios.get('/allUsers');
       setUsers(response.data);
       setFilteredUsers(response.data);
     } catch (err) {
@@ -56,7 +56,7 @@ function ConnectPage() {
 
   async function getFollowedUsers() {
     try {
-      const response = await axios.get('http://localhost:4000/retrieveFollowedUsers');
+      const response = await axios.get('/retrieveFollowedUsers');
       setFollowedUsers(response.data);
     } catch (err) {
       console.log(err);
@@ -71,8 +71,8 @@ function ConnectPage() {
   async function handleFollow(id) {
     // id for current user to follow (the user being clicked on)
     try {
-      const response = await axios.post('http://localhost:4000/followUser', {
-        user_to_follow_id: id
+      const response = await axios.post('/followUser', {
+        user_to_follow_id: id,
       });
       setFollowedUsers([...followedUsers, response.data]);
 
@@ -86,11 +86,13 @@ function ConnectPage() {
     // id for the user to unfollow
     try {
       // send post request
-      await axios.post('http://localhost:4000/unfollowUser', {
-        user_followed_id: id
+      await axios.post('/unfollowUser', {
+        user_followed_id: id,
       });
       let updatedFollowedUsers = [...followedUsers];
-      updatedFollowedUsers = updatedFollowedUsers.filter(u => u.user_followed_id !== id);
+      updatedFollowedUsers = updatedFollowedUsers.filter(
+        (u) => u.user_followed_id !== id
+      );
       setFollowedUsers(updatedFollowedUsers);
 
       getFollowedUsers();
@@ -100,7 +102,7 @@ function ConnectPage() {
   }
 
   function isFollowing(user) {
-    const result = followedUsers.findIndex(u => u.userFollowedId === user.id);
+    const result = followedUsers.findIndex((u) => u.userFollowedId === user.id);
     return result !== -1;
   }
 
@@ -128,7 +130,8 @@ function ConnectPage() {
                 user={user}
                 onFollow={handleFollow}
                 onUnfollow={handleUnfollow}
-                isFollowing={isFollowing(user)} />
+                isFollowing={isFollowing(user)}
+              />
             ))}
           </DisplayContent>
         </Container>

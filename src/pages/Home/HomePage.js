@@ -49,7 +49,7 @@ const HomePage = () => {
   useEffect(() => {
     async function getTasks() {
       try {
-        const result = await axios.get('http://localhost:4000/tasks');
+        const result = await axios.get('/tasks');
         setTasks(result.data);
       } catch (err) {
         setError(err?.response?.data?.message || err.message);
@@ -72,7 +72,7 @@ const HomePage = () => {
         },
       };
       setTasks(updatedTasks);
-      await axios.put('http://localhost:4000/task', {
+      await axios.put('/task', {
         taskId: task.id,
       });
     } catch (err) {

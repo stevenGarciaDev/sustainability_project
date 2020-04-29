@@ -22,6 +22,7 @@ import routes from './pages/routes';
 import theme from './constants/theme';
 
 function App() {
+  axios.defaults.baseURL = 'http://localhost:4000';
   axios.interceptors.request.use(
     async function(config) {
       try {

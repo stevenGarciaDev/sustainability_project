@@ -73,7 +73,7 @@ function UserProfilePage() {
   useEffect(() => {
     async function getTasks() {
       try {
-        const result = await axios.get('http://localhost:4000/tasks');
+        const result = await axios.get('/tasks');
         setTasks(result.data);
       } catch (err) {
         console.log(err);
@@ -82,9 +82,7 @@ function UserProfilePage() {
 
     async function getUserInfo() {
       try {
-        const response = await axios.get(
-          'http://localhost:4000/profileSettings'
-        );
+        const response = await axios.get('/profileSettings');
         setBio(response.data.bio);
         setProfilePhoto(response.data.profilePhoto);
       } catch (err) {
@@ -94,9 +92,7 @@ function UserProfilePage() {
 
     async function getTotalContributions() {
       try {
-        const response = await axios.get(
-          'http://localhost:4000/retrieveUserTaskCount'
-        );
+        const response = await axios.get('/retrieveUserTaskCount');
         setTotalContributions(response.data.sum);
       } catch (err) {
         console.log(err);
@@ -105,9 +101,7 @@ function UserProfilePage() {
 
     async function getFollowerInfo() {
       try {
-        const response = await axios.get(
-          'http://localhost:4000/retrieveFollowers'
-        );
+        const response = await axios.get('/retrieveFollowers');
         setFollowers(response.data);
       } catch (err) {
         console.log(err);
@@ -116,7 +110,7 @@ function UserProfilePage() {
 
     async function getFollowedUsers() {
       try {
-        const response = await axios.get('http://localhost:4000/retrieveFollowedUsers');
+        const response = await axios.get('/retrieveFollowedUsers');
         setFollowedUsers(response.data);
       } catch (err) {
         console.log(err);
@@ -139,9 +133,18 @@ function UserProfilePage() {
             <ProfileImage src={profilePhoto} height="200" width="200" />
             <UserInfoContainer>
               <FollowerInfoContainer>
-                <UserFollowerInfo infoType="Total Contributions" data={totalContributions} />
-                <UserFollowerInfo infoType="Followers" data={followers.length.toString()} />
-                <UserFollowerInfo infoType="Following" data={followedUsers.length.toString()} />
+                <UserFollowerInfo
+                  infoType="Total Contributions"
+                  data={totalContributions}
+                />
+                <UserFollowerInfo
+                  infoType="Followers"
+                  data={followers.length.toString()}
+                />
+                <UserFollowerInfo
+                  infoType="Following"
+                  data={followedUsers.length.toString()}
+                />
               </FollowerInfoContainer>
               <UserBio>{bio}</UserBio>
             </UserInfoContainer>
