@@ -60,19 +60,32 @@ const Subtext = styled('p')`
 `;
 
 const SignUpPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (confirmPassword !== password) {
+      setError('Passwords must match');
+      return;
+    }
+    if (password.length < 8) {
+      setError('Minimum password length: 8');
+    }
+
     try {
       const {
         data: { token },
       } = await axios.post('/signup', {
-        username: email,
+        username,
         password,
+        firstName,
+        lastName,
       });
       if (!token) {
         // eslint-disable-next-line no-throw-literal
@@ -94,11 +107,25 @@ const SignUpPage = () => {
           <Headline>Sign up and join the eco-friendly community.</Headline>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Input
-              name="email"
-              type="email"
-              value={email}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              name="username"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <Input
+              name="firstName"
+              value={firstName}
+              placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+            <Input
+              name="lastName"
+              value={lastName}
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+              required
             />
             <Input
               name="password"
@@ -106,6 +133,8 @@ const SignUpPage = () => {
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              required
             />
             <Input
               name="confirmPassword"
@@ -113,6 +142,8 @@ const SignUpPage = () => {
               value={confirmPassword}
               placeholder="Confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
+              minLength={8}
+              required
             />
             <IonButton type="submit">Create Account</IonButton>
           </Form>
