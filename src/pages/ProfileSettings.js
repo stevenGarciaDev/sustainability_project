@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import {
-  IonPage,
-  IonContent,
-  IonItem,
-  IonButton,
-} from '@ionic/react';
+import { IonPage, IonContent, IonItem, IonButton } from '@ionic/react';
 
 import NavBar from '../navigation/NavBar';
 
@@ -52,9 +47,7 @@ function ProfileSettings() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        const response = await axios.get(
-          'http://localhost:4000/profileSettings'
-        );
+        const response = await axios.get('/profileSettings');
         console.log(`result is `, response);
         setBio(response.data.bio);
       } catch (err) {
@@ -85,20 +78,14 @@ function ProfileSettings() {
         console.log('response.data.secure_url', response.data.secure_url);
 
         setProfilePhoto(response.data.secure_url);
-        await axios.put(
-          'http://localhost:4000/updateProfileSettings',
-          {
-            bio,
-            profile_photo: response.data.secure_url,
-          }
-        );
+        await axios.put('/updateProfileSettings', {
+          bio,
+          profile_photo: response.data.secure_url,
+        });
       } else {
-        await axios.put(
-          'http://localhost:4000/updateProfileSettings',
-          {
-            bio,
-          }
-        );
+        await axios.put('/updateProfileSettings', {
+          bio,
+        });
       }
     } catch (err) {
       console.log(err);

@@ -12,7 +12,7 @@ import SignUpPage from './pages/SignUpPage';
 import ShopPage from './pages/ShopPage';
 import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
-import LeaderboardPage from './pages/LeaderboardPage';
+import LeaderboardPage from './pages/LeaderboardPage/LeaderboardPage';
 import LoginPage from './pages/LoginPage';
 import ConnectPage from './pages/Connect/ConnectPage';
 import ProfileSettingsPage from './pages/ProfileSettings';
@@ -22,6 +22,7 @@ import routes from './pages/routes';
 import theme from './constants/theme';
 
 function App() {
+  axios.defaults.baseURL = 'http://localhost:4000';
   axios.interceptors.request.use(
     async function(config) {
       try {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -34,11 +35,11 @@ const UnfollowButton = styled('button')`
   border-radius: 5px;
 `;
 
-const UserInfo = styled('div')`
+export const UserInfo = styled('div')`
   display: flex;
 `;
 
-const UserPhotoIcon = styled('img')`
+export const UserPhotoIcon = styled('img')`
   border-radius: 50%;
   height: 50px;
   width: 50px;
@@ -47,7 +48,7 @@ const UserPhotoIcon = styled('img')`
   top: 5px;
 `;
 
-const UserNameDisplay = styled('h1')`
+export const UserNameDisplay = styled('h1')`
   position: relative;
   top: -7px;
 
@@ -57,7 +58,6 @@ const UserNameDisplay = styled('h1')`
 `;
 
 const UserConnectItem = (props) => {
-
   const { user } = props;
   return (
     <Container>
@@ -66,9 +66,13 @@ const UserConnectItem = (props) => {
         <UserNameDisplay>{user.username}</UserNameDisplay>
       </UserInfo>
       {props.isFollowing ? (
-        <UnfollowButton onClick={() => props.onUnfollow(user.id)}>Unfollow</UnfollowButton>
+        <UnfollowButton onClick={() => props.onUnfollow(user.id)}>
+          Unfollow
+        </UnfollowButton>
       ) : (
-        <FollowButton onClick={() => props.onFollow(user.id)}>Follow</FollowButton>
+        <FollowButton onClick={() => props.onFollow(user.id)}>
+          Follow
+        </FollowButton>
       )}
     </Container>
   );

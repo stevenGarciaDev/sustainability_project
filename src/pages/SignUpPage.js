@@ -70,7 +70,7 @@ const SignUpPage = () => {
     try {
       const {
         data: { token },
-      } = await axios.post('http://localhost:4000/signup', {
+      } = await axios.post('/signup', {
         username: email,
         password,
       });
