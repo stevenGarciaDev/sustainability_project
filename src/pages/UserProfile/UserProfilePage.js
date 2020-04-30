@@ -73,7 +73,7 @@ function UserProfilePage() {
   useEffect(() => {
     async function getTasks() {
       try {
-        const result = await axios.get('/tasks');
+        const result = await axios.get('/tasks/user');
         setTasks(result.data);
       } catch (err) {
         console.log(err);

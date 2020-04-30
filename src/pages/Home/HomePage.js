@@ -49,7 +49,7 @@ const HomePage = () => {
   useEffect(() => {
     async function getTasks() {
       try {
-        const result = await axios.get('/tasks');
+        const result = await axios.get('/tasks/user');
         setTasks(result.data);
       } catch (err) {
         setError(err?.response?.data?.message || err.message);
