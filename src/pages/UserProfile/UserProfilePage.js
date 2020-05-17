@@ -116,7 +116,9 @@ function UserProfilePage() {
 
     async function getFollowedUsers() {
       try {
-        const response = await axios.get('http://localhost:4000/retrieveFollowedUsers');
+        const response = await axios.get(
+          'http://localhost:4000/retrieveFollowedUsers'
+        );
         setFollowedUsers(response.data);
       } catch (err) {
         console.log(err);
@@ -139,9 +141,18 @@ function UserProfilePage() {
             <ProfileImage src={profilePhoto} height="200" width="200" />
             <UserInfoContainer>
               <FollowerInfoContainer>
-                <UserFollowerInfo infoType="Total Contributions" data={totalContributions} />
-                <UserFollowerInfo infoType="Followers" data={followers.length.toString()} />
-                <UserFollowerInfo infoType="Following" data={followedUsers.length.toString()} />
+                <UserFollowerInfo
+                  infoType="Total Contributions"
+                  data={totalContributions}
+                />
+                <UserFollowerInfo
+                  infoType="Followers"
+                  data={followers.length.toString()}
+                />
+                <UserFollowerInfo
+                  infoType="Following"
+                  data={followedUsers.length.toString()}
+                />
               </FollowerInfoContainer>
               <UserBio>{bio}</UserBio>
             </UserInfoContainer>

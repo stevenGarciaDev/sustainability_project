@@ -56,7 +56,9 @@ function ConnectPage() {
 
   async function getFollowedUsers() {
     try {
-      const response = await axios.get('http://localhost:4000/retrieveFollowedUsers');
+      const response = await axios.get(
+        'http://localhost:4000/retrieveFollowedUsers'
+      );
       setFollowedUsers(response.data);
     } catch (err) {
       console.log(err);
@@ -72,7 +74,7 @@ function ConnectPage() {
     // id for current user to follow (the user being clicked on)
     try {
       const response = await axios.post('http://localhost:4000/followUser', {
-        user_to_follow_id: id
+        user_to_follow_id: id,
       });
       setFollowedUsers([...followedUsers, response.data]);
 
@@ -87,10 +89,12 @@ function ConnectPage() {
     try {
       // send post request
       await axios.post('http://localhost:4000/unfollowUser', {
-        user_followed_id: id
+        user_followed_id: id,
       });
       let updatedFollowedUsers = [...followedUsers];
-      updatedFollowedUsers = updatedFollowedUsers.filter(u => u.user_followed_id !== id);
+      updatedFollowedUsers = updatedFollowedUsers.filter(
+        (u) => u.user_followed_id !== id
+      );
       setFollowedUsers(updatedFollowedUsers);
 
       getFollowedUsers();
@@ -100,7 +104,7 @@ function ConnectPage() {
   }
 
   function isFollowing(user) {
-    const result = followedUsers.findIndex(u => u.userFollowedId === user.id);
+    const result = followedUsers.findIndex((u) => u.userFollowedId === user.id);
     return result !== -1;
   }
 
@@ -128,7 +132,8 @@ function ConnectPage() {
                 user={user}
                 onFollow={handleFollow}
                 onUnfollow={handleUnfollow}
-                isFollowing={isFollowing(user)} />
+                isFollowing={isFollowing(user)}
+              />
             ))}
           </DisplayContent>
         </Container>
